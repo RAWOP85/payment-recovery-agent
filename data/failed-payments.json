@@ -1,0 +1,722 @@
+[
+  {
+    "customer_id": "cust_0054",
+    "amount": 67497,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-09T16:26:33.230Z"
+  },
+  {
+    "customer_id": "cust_0023",
+    "amount": 85076,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-14T06:35:17.012Z"
+  },
+  {
+    "customer_id": "cust_0103",
+    "amount": 10688,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-04T08:48:53.915Z"
+  },
+  {
+    "customer_id": "cust_0057",
+    "amount": 358588,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-15T23:22:07.116Z"
+  },
+  {
+    "customer_id": "cust_0033",
+    "amount": 297159,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-02T02:26:21.311Z"
+  },
+  {
+    "customer_id": "cust_0101",
+    "amount": 67520,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-19T15:28:27.164Z"
+  },
+  {
+    "customer_id": "cust_0083",
+    "amount": 81080,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-15T09:07:00.766Z"
+  },
+  {
+    "customer_id": "cust_0042",
+    "amount": 229874,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-11T14:14:30.981Z"
+  },
+  {
+    "customer_id": "cust_0111",
+    "amount": 25430,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-16T02:17:23.651Z"
+  },
+  {
+    "customer_id": "cust_0075",
+    "amount": 72524,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-13T20:47:38.584Z"
+  },
+  {
+    "customer_id": "cust_0108",
+    "amount": 425976,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-03T18:26:58.340Z"
+  },
+  {
+    "customer_id": "cust_0059",
+    "amount": 420579,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-07T14:36:50.705Z"
+  },
+  {
+    "customer_id": "cust_0064",
+    "amount": 112231,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-09T03:06:31.399Z"
+  },
+  {
+    "customer_id": "cust_0107",
+    "amount": 23947,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-21T03:06:15.514Z"
+  },
+  {
+    "customer_id": "cust_0002",
+    "amount": 92949,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-20T03:47:35.723Z"
+  },
+  {
+    "customer_id": "cust_0061",
+    "amount": 96494,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-16T10:57:01.068Z"
+  },
+  {
+    "customer_id": "cust_0099",
+    "amount": 28481,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-05T14:49:40.104Z"
+  },
+  {
+    "customer_id": "cust_0044",
+    "amount": 50367,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-02T04:15:31.489Z"
+  },
+  {
+    "customer_id": "cust_0084",
+    "amount": 92303,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-18T16:16:41.606Z"
+  },
+  {
+    "customer_id": "cust_0073",
+    "amount": 48689,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-08T15:46:48.340Z"
+  },
+  {
+    "customer_id": "cust_0053",
+    "amount": 64542,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-10T18:53:12.403Z"
+  },
+  {
+    "customer_id": "cust_0040",
+    "amount": 57665,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-21T21:18:51.860Z"
+  },
+  {
+    "customer_id": "cust_0112",
+    "amount": 441826,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-21T17:56:21.098Z"
+  },
+  {
+    "customer_id": "cust_0097",
+    "amount": 72187,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-19T10:59:15.686Z"
+  },
+  {
+    "customer_id": "cust_0060",
+    "amount": 393633,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-07T20:11:59.663Z"
+  },
+  {
+    "customer_id": "cust_0068",
+    "amount": 52090,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-10T21:14:23.092Z"
+  },
+  {
+    "customer_id": "cust_0049",
+    "amount": 160593,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-16T03:26:42.042Z"
+  },
+  {
+    "customer_id": "cust_0116",
+    "amount": 99148,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-02T21:35:01.164Z"
+  },
+  {
+    "customer_id": "cust_0058",
+    "amount": 217464,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-07T19:34:43.257Z"
+  },
+  {
+    "customer_id": "cust_0017",
+    "amount": 92084,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-16T22:48:36.722Z"
+  },
+  {
+    "customer_id": "cust_0003",
+    "amount": 272769,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-22T03:34:25.867Z"
+  },
+  {
+    "customer_id": "cust_0094",
+    "amount": 60475,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-14T20:04:57.050Z"
+  },
+  {
+    "customer_id": "cust_0100",
+    "amount": 72440,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-07T05:21:30.594Z"
+  },
+  {
+    "customer_id": "cust_0039",
+    "amount": 18634,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-03T10:41:01.700Z"
+  },
+  {
+    "customer_id": "cust_0055",
+    "amount": 312207,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-17T14:48:20.713Z"
+  },
+  {
+    "customer_id": "cust_0087",
+    "amount": 99200,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-11T15:01:45.275Z"
+  },
+  {
+    "customer_id": "cust_0011",
+    "amount": 97334,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-03T06:22:29.436Z"
+  },
+  {
+    "customer_id": "cust_0089",
+    "amount": 70972,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-18T03:26:40.637Z"
+  },
+  {
+    "customer_id": "cust_0062",
+    "amount": 458849,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-09T00:52:38.137Z"
+  },
+  {
+    "customer_id": "cust_0082",
+    "amount": 86449,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-10T16:07:13.429Z"
+  },
+  {
+    "customer_id": "cust_0088",
+    "amount": 40763,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-07T00:43:47.134Z"
+  },
+  {
+    "customer_id": "cust_0071",
+    "amount": 305327,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-12T14:21:18.271Z"
+  },
+  {
+    "customer_id": "cust_0090",
+    "amount": 90383,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-20T09:19:32.304Z"
+  },
+  {
+    "customer_id": "cust_0035",
+    "amount": 63697,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-01T19:05:37.035Z"
+  },
+  {
+    "customer_id": "cust_0065",
+    "amount": 212598,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-21T15:17:44.188Z"
+  },
+  {
+    "customer_id": "cust_0119",
+    "amount": 39118,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-06T14:41:41.421Z"
+  },
+  {
+    "customer_id": "cust_0028",
+    "amount": 37062,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-03T21:14:52.600Z"
+  },
+  {
+    "customer_id": "cust_0008",
+    "amount": 148740,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-05T03:41:54.280Z"
+  },
+  {
+    "customer_id": "cust_0091",
+    "amount": 246492,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-11T04:49:50.131Z"
+  },
+  {
+    "customer_id": "cust_0102",
+    "amount": 99117,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-15T11:00:54.143Z"
+  },
+  {
+    "customer_id": "cust_0080",
+    "amount": 64033,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-15T04:14:48.205Z"
+  },
+  {
+    "customer_id": "cust_0105",
+    "amount": 74968,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-01T22:30:34.060Z"
+  },
+  {
+    "customer_id": "cust_0012",
+    "amount": 38414,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-15T20:35:36.759Z"
+  },
+  {
+    "customer_id": "cust_0032",
+    "amount": 61162,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-14T17:02:46.770Z"
+  },
+  {
+    "customer_id": "cust_0081",
+    "amount": 126477,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-11T10:46:51.874Z"
+  },
+  {
+    "customer_id": "cust_0050",
+    "amount": 76836,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-09T09:14:40.157Z"
+  },
+  {
+    "customer_id": "cust_0024",
+    "amount": 94609,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-16T13:55:21.873Z"
+  },
+  {
+    "customer_id": "cust_0026",
+    "amount": 21515,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-18T15:44:34.152Z"
+  },
+  {
+    "customer_id": "cust_0070",
+    "amount": 350074,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-13T23:22:11.225Z"
+  },
+  {
+    "customer_id": "cust_0118",
+    "amount": 164446,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-07T09:22:05.892Z"
+  },
+  {
+    "customer_id": "cust_0056",
+    "amount": 333268,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-17T07:52:08.708Z"
+  },
+  {
+    "customer_id": "cust_0020",
+    "amount": 499088,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-22T02:17:08.548Z"
+  },
+  {
+    "customer_id": "cust_0007",
+    "amount": 89295,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-08T13:50:45.575Z"
+  },
+  {
+    "customer_id": "cust_0086",
+    "amount": 38305,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-07T16:20:20.024Z"
+  },
+  {
+    "customer_id": "cust_0022",
+    "amount": 390921,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-02T00:54:13.431Z"
+  },
+  {
+    "customer_id": "cust_0051",
+    "amount": 88509,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-13T10:29:07.500Z"
+  },
+  {
+    "customer_id": "cust_0117",
+    "amount": 18739,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-04T21:36:20.293Z"
+  },
+  {
+    "customer_id": "cust_0079",
+    "amount": 134649,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-08T12:26:05.783Z"
+  },
+  {
+    "customer_id": "cust_0066",
+    "amount": 459322,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-12T07:57:31.891Z"
+  },
+  {
+    "customer_id": "cust_0021",
+    "amount": 110825,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-02T08:03:24.562Z"
+  },
+  {
+    "customer_id": "cust_0093",
+    "amount": 84819,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-09T13:35:09.140Z"
+  },
+  {
+    "customer_id": "cust_0038",
+    "amount": 63471,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-16T22:44:44.525Z"
+  },
+  {
+    "customer_id": "cust_0098",
+    "amount": 13414,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-17T23:27:19.721Z"
+  },
+  {
+    "customer_id": "cust_0120",
+    "amount": 69843,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-19T09:32:18.474Z"
+  },
+  {
+    "customer_id": "cust_0009",
+    "amount": 27134,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-16T14:57:16.899Z"
+  },
+  {
+    "customer_id": "cust_0016",
+    "amount": 332752,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-04T01:25:00.559Z"
+  },
+  {
+    "customer_id": "cust_0013",
+    "amount": 216314,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-07T05:47:27.671Z"
+  },
+  {
+    "customer_id": "cust_0067",
+    "amount": 49078,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-14T06:24:41.806Z"
+  },
+  {
+    "customer_id": "cust_0063",
+    "amount": 454692,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-14T13:57:58.330Z"
+  },
+  {
+    "customer_id": "cust_0004",
+    "amount": 34417,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-15T04:59:42.830Z"
+  },
+  {
+    "customer_id": "cust_0115",
+    "amount": 61702,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-04T01:05:23.715Z"
+  },
+  {
+    "customer_id": "cust_0018",
+    "amount": 105250,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-06T23:41:29.225Z"
+  },
+  {
+    "customer_id": "cust_0001",
+    "amount": 79609,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-16T12:03:23.350Z"
+  },
+  {
+    "customer_id": "cust_0043",
+    "amount": 41498,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-07T16:27:45.479Z"
+  },
+  {
+    "customer_id": "cust_0030",
+    "amount": 88235,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-20T09:00:24.557Z"
+  },
+  {
+    "customer_id": "cust_0048",
+    "amount": 429985,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-19T01:32:42.564Z"
+  },
+  {
+    "customer_id": "cust_0104",
+    "amount": 94671,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-01T10:13:03.105Z"
+  },
+  {
+    "customer_id": "cust_0015",
+    "amount": 87004,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-13T07:31:30.243Z"
+  },
+  {
+    "customer_id": "cust_0106",
+    "amount": 72765,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-04T03:13:21.608Z"
+  },
+  {
+    "customer_id": "cust_0027",
+    "amount": 27463,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-13T13:48:53.364Z"
+  },
+  {
+    "customer_id": "cust_0114",
+    "amount": 81815,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-08T07:50:23.563Z"
+  },
+  {
+    "customer_id": "cust_0085",
+    "amount": 24748,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-18T05:44:23.760Z"
+  },
+  {
+    "customer_id": "cust_0005",
+    "amount": 10151,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-13T23:07:53.225Z"
+  },
+  {
+    "customer_id": "cust_0096",
+    "amount": 89860,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-19T09:41:09.762Z"
+  },
+  {
+    "customer_id": "cust_0006",
+    "amount": 240137,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-09T11:26:30.719Z"
+  },
+  {
+    "customer_id": "cust_0010",
+    "amount": 363338,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-02T14:21:22.241Z"
+  },
+  {
+    "customer_id": "cust_0047",
+    "amount": 295681,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-21T21:23:59.116Z"
+  },
+  {
+    "customer_id": "cust_0014",
+    "amount": 53697,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-12T04:00:39.443Z"
+  },
+  {
+    "customer_id": "cust_0034",
+    "amount": 146016,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-10T04:44:19.141Z"
+  },
+  {
+    "customer_id": "cust_0078",
+    "amount": 68514,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-01T08:50:46.348Z"
+  },
+  {
+    "customer_id": "cust_0077",
+    "amount": 34940,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-04T14:17:40.848Z"
+  },
+  {
+    "customer_id": "cust_0095",
+    "amount": 449938,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-21T08:57:20.533Z"
+  },
+  {
+    "customer_id": "cust_0045",
+    "amount": 13463,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-06T22:35:44.140Z"
+  },
+  {
+    "customer_id": "cust_0041",
+    "amount": 22072,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-17T09:24:44.854Z"
+  },
+  {
+    "customer_id": "cust_0052",
+    "amount": 274526,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-14T21:48:18.250Z"
+  },
+  {
+    "customer_id": "cust_0076",
+    "amount": 126545,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-08T01:37:15.718Z"
+  },
+  {
+    "customer_id": "cust_0029",
+    "amount": 327202,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-10T11:30:08.074Z"
+  },
+  {
+    "customer_id": "cust_0036",
+    "amount": 43923,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-06T10:29:53.029Z"
+  },
+  {
+    "customer_id": "cust_0109",
+    "amount": 59125,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-14T22:27:12.866Z"
+  },
+  {
+    "customer_id": "cust_0074",
+    "amount": 43292,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-22T07:06:43.470Z"
+  },
+  {
+    "customer_id": "cust_0069",
+    "amount": 47997,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-19T07:20:57.585Z"
+  },
+  {
+    "customer_id": "cust_0092",
+    "amount": 32962,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-16T06:16:55.561Z"
+  },
+  {
+    "customer_id": "cust_0110",
+    "amount": 22758,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-15T09:14:26.372Z"
+  },
+  {
+    "customer_id": "cust_0031",
+    "amount": 49380,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-15T23:31:31.084Z"
+  },
+  {
+    "customer_id": "cust_0037",
+    "amount": 189364,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-13T19:55:26.614Z"
+  },
+  {
+    "customer_id": "cust_0113",
+    "amount": 394198,
+    "failure_reason": "checkout_abandoned",
+    "failed_at": "2026-08-22T05:41:51.187Z"
+  },
+  {
+    "customer_id": "cust_0019",
+    "amount": 22514,
+    "failure_reason": "card_declined",
+    "failed_at": "2026-08-06T04:53:51.211Z"
+  },
+  {
+    "customer_id": "cust_0046",
+    "amount": 75681,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-06T22:50:08.103Z"
+  },
+  {
+    "customer_id": "cust_0025",
+    "amount": 81192,
+    "failure_reason": "insufficient_funds",
+    "failed_at": "2026-08-14T20:17:17.329Z"
+  },
+  {
+    "customer_id": "cust_0072",
+    "amount": 120508,
+    "failure_reason": "otp_timeout",
+    "failed_at": "2026-08-14T01:03:24.173Z"
+  }
+]

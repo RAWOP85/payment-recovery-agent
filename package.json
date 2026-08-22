@@ -1,0 +1,20 @@
+{
+  "name": "payment-recovery-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rule-based agent that detects failed/abandoned Razorpay test-mode payments, escalates recovery nudges on a fixed schedule, and reports honest recovered/unrecovered outcomes.",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "check:razorpay": "node scripts/check-razorpay.js",
+    "generate:dataset": "node data/generate-dataset.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "razorpay": "^2.9.8"
+  }
+}
