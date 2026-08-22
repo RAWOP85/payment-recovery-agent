@@ -7,7 +7,9 @@
   "type": "commonjs",
   "scripts": {
     "check:razorpay": "node scripts/check-razorpay.js",
-    "generate:dataset": "node data/generate-dataset.js"
+    "generate:dataset": "node data/generate-dataset.js",
+    "test": "node --test",
+    "recover": "node scripts/run-recovery.js"
   },
   "engines": {
     "node": ">=18"
