@@ -49,3 +49,42 @@ test('formatSummary includes both recovered and unrecovered counts in the printe
   assert.match(summary, /Recovered: 1/);
   assert.match(summary, /Unrecovered: 1/);
 });
+
+test('buildReport labels a record carrying payment_link as source "live" and preserves the link', () => {
+  const liveResult = {
+    ...makeResult({ customerId: 'demo_live_001', reason: 'checkout_abandoned', outcome: 'unrecovered', recoveredAtRung: null, attemptCount: 1 }),
+    payment_link: { id: 'plink_123', short_url: 'https://rzp.io/i/abc123' },
+  };
+  const simulatedResult = makeResult({ customerId: 'a', reason: 'otp_timeout', outcome: 'recovered', recoveredAtRung: 2, attemptCount: 2 });
+
+  const report = buildReport({ seed: 99, results: [liveResult, simulatedResult] });
+
+  const liveRecord = report.records.find((r) => r.customer_id === 'demo_live_001');
+  const simulatedRecord = report.records.find((r) => r.customer_id === 'a');
+
+  assert.equal(liveRecord.source, 'live');
+  assert.deepEqual(liveRecord.payment_link, { id: 'plink_123', short_url: 'https://rzp.io/i/abc123' });
+
+  assert.equal(simulatedRecord.source, 'simulated');
+  assert.equal(simulatedRecord.payment_link, null);
+});
+
+test('formatSummary notes the live record when one is present in the report', () => {
+  const liveResult = {
+    ...makeResult({ customerId: 'demo_live_001', reason: 'checkout_abandoned', outcome: 'unrecovered', recoveredAtRung: null, attemptCount: 1 }),
+    payment_link: { id: 'plink_123', short_url: 'https://rzp.io/i/abc123' },
+  };
+  const report = buildReport({ seed: 99, results: [liveResult] });
+  const summary = formatSummary(report);
+  assert.match(summary, /Live Razorpay record: demo_live_001/);
+  assert.match(summary, /https:\/\/rzp\.io\/i\/abc123/);
+});
+
+test('formatSummary omits the live-record line when no record has source "live"', () => {
+  const results = [
+    makeResult({ customerId: 'a', reason: 'otp_timeout', outcome: 'recovered', recoveredAtRung: 2, attemptCount: 2 }),
+  ];
+  const report = buildReport({ seed: 7, results });
+  const summary = formatSummary(report);
+  assert.doesNotMatch(summary, /Live Razorpay record/);
+});

@@ -52,11 +52,32 @@ async function main() {
   });
 
   if (args.live) {
-    const liveResult = await runLiveDemoRecord();
-    for (const attempt of liveResult.attempts) {
-      appendEntry(attempt);
+    try {
+      const liveResult = await runLiveDemoRecord();
+      for (const attempt of liveResult.attempts) {
+        appendEntry(attempt);
+      }
+      results.push(liveResult);
+    } catch (err) {
+      console.error(`Live Razorpay leg FAILED: ${err.message}`);
+      const failedAttempt = {
+        timestamp: new Date().toISOString(),
+        customer_id: 'demo_live_001',
+        rung: 0,
+        day_offset: 0,
+        action: 'exhaust',
+        reason: `Live Razorpay API call failed: ${err.message} — reporting as unrecovered, not hidden.`,
+        outcome: 'no_response',
+      };
+      appendEntry(failedAttempt);
+      results.push({
+        customer_id: 'demo_live_001',
+        failure_reason: 'checkout_abandoned',
+        outcome: 'unrecovered',
+        recovered_at_rung: null,
+        attempts: [failedAttempt],
+      });
     }
-    results.push(liveResult);
   }
 
   const report = buildReport({ seed, results });

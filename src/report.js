@@ -35,6 +35,8 @@ function buildReport({ seed, results }) {
       outcome: result.outcome,
       recovered_at_rung: result.recovered_at_rung,
       attempts: result.attempts.length,
+      source: result.payment_link ? 'live' : 'simulated',
+      payment_link: result.payment_link ?? null,
     })),
   };
 }
@@ -55,6 +57,11 @@ function formatSummary(report) {
   lines.push('  Recovered at rung (day offset):');
   for (const [rung, count] of Object.entries(report.by_rung_recovered)) {
     lines.push(`    day ${rung}: ${count}`);
+  }
+  const liveRecord = report.records.find((record) => record.source === 'live');
+  if (liveRecord) {
+    const shortUrl = liveRecord.payment_link ? liveRecord.payment_link.short_url : 'n/a';
+    lines.push(`  Live Razorpay record: ${liveRecord.customer_id} (payment_link: ${shortUrl || 'n/a'})`);
   }
   return lines.join('\n');
 }

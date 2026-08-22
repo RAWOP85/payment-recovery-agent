@@ -1,875 +1,1115 @@
 {
-  "generated_at": "2026-08-22T16:28:08.579Z",
-  "seed": 777,
+  "generated_at": "2026-08-22T16:42:08.519Z",
+  "seed": 348429798,
   "totals": {
     "processed": 120,
-    "recovered": 65,
-    "unrecovered": 55
+    "recovered": 66,
+    "unrecovered": 54
   },
   "by_failure_reason": {
     "card_declined": {
-      "recovered": 14,
-      "unrecovered": 12
+      "recovered": 16,
+      "unrecovered": 10
     },
     "insufficient_funds": {
-      "recovered": 10,
-      "unrecovered": 23
+      "recovered": 11,
+      "unrecovered": 22
     },
     "otp_timeout": {
-      "recovered": 27,
-      "unrecovered": 14
+      "recovered": 23,
+      "unrecovered": 18
     },
     "checkout_abandoned": {
-      "recovered": 14,
-      "unrecovered": 6
+      "recovered": 16,
+      "unrecovered": 4
     }
   },
   "by_rung_recovered": {
-    "0": 32,
+    "0": 30,
     "2": 16,
-    "5": 11,
-    "7": 6
+    "5": 13,
+    "7": 7
   },
   "records": [
     {
       "customer_id": "cust_0054",
       "failure_reason": "card_declined",
       "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0023",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0103",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0057",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0033",
       "failure_reason": "card_declined",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0101",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0083",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 7,
-      "attempts": 4
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0042",
       "failure_reason": "card_declined",
       "outcome": "recovered",
       "recovered_at_rung": 2,
-      "attempts": 2
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0111",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0075",
       "failure_reason": "insufficient_funds",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0108",
       "failure_reason": "insufficient_funds",
-      "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0059",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0064",
       "failure_reason": "insufficient_funds",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0107",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0002",
       "failure_reason": "checkout_abandoned",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0061",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 7,
-      "attempts": 4
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0099",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0044",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0084",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0073",
       "failure_reason": "otp_timeout",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0053",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0040",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0112",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0097",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0060",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0068",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0049",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0116",
       "failure_reason": "card_declined",
-      "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0058",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0017",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0003",
       "failure_reason": "card_declined",
       "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0094",
       "failure_reason": "otp_timeout",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0100",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0039",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0055",
       "failure_reason": "otp_timeout",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0087",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0011",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0089",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
-      "recovered_at_rung": 7,
-      "attempts": 4
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0062",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0082",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0088",
       "failure_reason": "checkout_abandoned",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0071",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0090",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0035",
       "failure_reason": "card_declined",
-      "outcome": "recovered",
-      "recovered_at_rung": 7,
-      "attempts": 4
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0065",
       "failure_reason": "card_declined",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0119",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0028",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0008",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0091",
       "failure_reason": "card_declined",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0102",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0080",
       "failure_reason": "card_declined",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0105",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0012",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
       "recovered_at_rung": 2,
-      "attempts": 2
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0032",
       "failure_reason": "card_declined",
-      "outcome": "recovered",
-      "recovered_at_rung": 7,
-      "attempts": 4
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0081",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0050",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0024",
       "failure_reason": "insufficient_funds",
-      "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0026",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0070",
       "failure_reason": "otp_timeout",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0118",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0056",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0020",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0007",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0086",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0022",
       "failure_reason": "insufficient_funds",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0051",
       "failure_reason": "otp_timeout",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0117",
       "failure_reason": "checkout_abandoned",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0079",
       "failure_reason": "card_declined",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0066",
       "failure_reason": "checkout_abandoned",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0021",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0093",
       "failure_reason": "insufficient_funds",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0038",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0098",
       "failure_reason": "checkout_abandoned",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0120",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0009",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0016",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0013",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
       "recovered_at_rung": 2,
-      "attempts": 2
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0067",
       "failure_reason": "card_declined",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0063",
       "failure_reason": "otp_timeout",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0004",
       "failure_reason": "card_declined",
-      "outcome": "recovered",
-      "recovered_at_rung": 7,
-      "attempts": 4
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0115",
       "failure_reason": "insufficient_funds",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0018",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0001",
       "failure_reason": "card_declined",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0043",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0030",
       "failure_reason": "card_declined",
       "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0048",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0104",
       "failure_reason": "card_declined",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0015",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0106",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0027",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0114",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0085",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0005",
       "failure_reason": "checkout_abandoned",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0096",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0006",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0010",
       "failure_reason": "checkout_abandoned",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0047",
       "failure_reason": "card_declined",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0014",
       "failure_reason": "insufficient_funds",
       "outcome": "recovered",
       "recovered_at_rung": 2,
-      "attempts": 2
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0034",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0078",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0077",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0095",
       "failure_reason": "insufficient_funds",
       "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0045",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0041",
       "failure_reason": "checkout_abandoned",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0052",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0076",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0029",
       "failure_reason": "otp_timeout",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0036",
       "failure_reason": "insufficient_funds",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0109",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "recovered_at_rung": 7,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0074",
       "failure_reason": "otp_timeout",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0069",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0092",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0110",
       "failure_reason": "card_declined",
       "outcome": "recovered",
-      "recovered_at_rung": 2,
-      "attempts": 2
+      "recovered_at_rung": 5,
+      "attempts": 3,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0031",
       "failure_reason": "checkout_abandoned",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0037",
       "failure_reason": "checkout_abandoned",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0113",
       "failure_reason": "checkout_abandoned",
-      "outcome": "unrecovered",
-      "recovered_at_rung": null,
-      "attempts": 4
+      "outcome": "recovered",
+      "recovered_at_rung": 0,
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0019",
       "failure_reason": "card_declined",
       "outcome": "recovered",
       "recovered_at_rung": 0,
-      "attempts": 1
+      "attempts": 1,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0046",
       "failure_reason": "insufficient_funds",
       "outcome": "unrecovered",
       "recovered_at_rung": null,
-      "attempts": 4
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0025",
       "failure_reason": "insufficient_funds",
-      "outcome": "recovered",
-      "recovered_at_rung": 0,
-      "attempts": 1
+      "outcome": "unrecovered",
+      "recovered_at_rung": null,
+      "attempts": 4,
+      "source": "simulated",
+      "payment_link": null
     },
     {
       "customer_id": "cust_0072",
       "failure_reason": "otp_timeout",
       "outcome": "recovered",
-      "recovered_at_rung": 5,
-      "attempts": 3
+      "recovered_at_rung": 2,
+      "attempts": 2,
+      "source": "simulated",
+      "payment_link": null
     }
   ]
 }
