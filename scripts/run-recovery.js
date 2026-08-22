@@ -12,11 +12,14 @@ const DATASET_PATH = path.join(__dirname, '..', 'data', 'failed-payments.json');
 const REPORT_PATH = path.join(__dirname, '..', 'data', 'report.json');
 
 function parseArgs(argv) {
-  const args = { seed: null, live: false };
+  const args = { seed: null, live: false, liveWait: false };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--live') {
       args.live = true;
+    } else if (arg === '--live-wait') {
+      args.live = true;
+      args.liveWait = true;
     } else if (arg === '--seed') {
       args.seed = Number(argv[i + 1]);
       i++;
@@ -27,12 +30,12 @@ function parseArgs(argv) {
   return args;
 }
 
-async function runLiveDemoRecord() {
+async function runLiveDemoRecord(liveWait) {
   // Required lazily so a plain `npm run recover` never needs Razorpay credentials.
   const razorpayClient = require('../src/config/razorpay');
   const { processLiveRecord } = require('../src/live-recovery');
   console.log('Running the live Razorpay demo record (real test-mode API calls)...');
-  return processLiveRecord(razorpayClient);
+  return processLiveRecord(razorpayClient, undefined, { liveWait });
 }
 
 async function main() {
@@ -53,7 +56,7 @@ async function main() {
 
   if (args.live) {
     try {
-      const liveResult = await runLiveDemoRecord();
+      const liveResult = await runLiveDemoRecord(args.liveWait);
       for (const attempt of liveResult.attempts) {
         appendEntry(attempt);
       }

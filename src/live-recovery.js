@@ -27,8 +27,21 @@ async function fetchPaymentLinkStatus(razorpayClient, paymentLinkId) {
   return link.status; // 'created' | 'paid' | 'expired' | 'cancelled' | 'partially_paid'
 }
 
-async function processLiveRecord(razorpayClient, record = DEMO_RECORD) {
+const LIVE_WAIT_MS = 75000;
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWait = false } = {}) {
   const link = await createDemoPaymentLink(razorpayClient, record);
+
+  if (liveWait) {
+    console.log(`Pay this link now to test recovery: ${link.short_url}`);
+    console.log(`Waiting ${LIVE_WAIT_MS / 1000}s before checking payment status...`);
+    await wait(LIVE_WAIT_MS);
+  }
+
   const attempts = [];
   let outcome = 'unrecovered';
   let recoveredAtRung = null;
