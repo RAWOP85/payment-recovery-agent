@@ -27,7 +27,7 @@ async function fetchPaymentLinkStatus(razorpayClient, paymentLinkId) {
   return link.status; // 'created' | 'paid' | 'expired' | 'cancelled' | 'partially_paid'
 }
 
-const LIVE_WAIT_MS = 75000;
+const LIVE_WAIT_MS = Number(process.env.LIVE_WAIT_MS) || 75000;
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
