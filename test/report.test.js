@@ -1,6 +1,12 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { buildReport, formatSummary } = require('../src/report');
+const {
+  buildReport,
+  formatSummary,
+  summarizeStrategy,
+  buildComparisonReport,
+  formatComparisonSummary,
+} = require('../src/report');
 
 function makeResult({ customerId, reason, outcome, recoveredAtRung, attemptCount }) {
   return {
@@ -106,4 +112,71 @@ test('buildReport embeds the AI strategy manifest and formatSummary reports the 
   assert.deepEqual(report.ai_strategy_manifest, aiStrategyManifest);
   const summary = formatSummary(report);
   assert.match(summary, /AI diagnosis: 1\/2 failure reasons used a live LLM strategy, 1 fell back to the rule table\./);
+});
+
+// --- baseline-vs-AI comparison (scripts/run-evaluation.js) -----------------
+
+function makeStratResult({ outcome, amount }) {
+  return { outcome, amount };
+}
+
+test('summarizeStrategy computes case and value recovery rates', () => {
+  const results = [
+    makeStratResult({ outcome: 'recovered', amount: 10000 }),
+    makeStratResult({ outcome: 'unrecovered', amount: 30000 }),
+    makeStratResult({ outcome: 'recovered', amount: 60000 }),
+  ];
+  const summary = summarizeStrategy(results);
+  assert.equal(summary.total_cases, 3);
+  assert.equal(summary.recovered_cases, 2);
+  assert.equal(summary.unrecovered_cases, 1);
+  assert.equal(summary.case_recovery_rate, 0.6667);
+  assert.equal(summary.total_value_paise, 100000);
+  assert.equal(summary.recovered_value_paise, 70000);
+  assert.equal(summary.value_recovery_rate, 0.7);
+});
+
+test('summarizeStrategy handles an empty result set without dividing by zero', () => {
+  const summary = summarizeStrategy([]);
+  assert.equal(summary.total_cases, 0);
+  assert.equal(summary.case_recovery_rate, 0);
+  assert.equal(summary.value_recovery_rate, 0);
+});
+
+test('buildComparisonReport labels the output as synthetic and computes an unclamped delta', () => {
+  const baselineResults = [
+    makeStratResult({ outcome: 'unrecovered', amount: 100000 }),
+    makeStratResult({ outcome: 'unrecovered', amount: 100000 }),
+  ];
+  const aiResults = [
+    makeStratResult({ outcome: 'recovered', amount: 100000 }),
+    makeStratResult({ outcome: 'unrecovered', amount: 100000 }),
+  ];
+  const comparison = buildComparisonReport({ seed: 42, baselineResults, aiResults });
+
+  assert.equal(comparison.seed, 42);
+  assert.match(comparison.label, /synthetic/i);
+  assert.match(comparison.label, /not real customer statistics/i);
+  assert.equal(comparison.baseline.recovered_cases, 0);
+  assert.equal(comparison.ai.recovered_cases, 1);
+  assert.equal(comparison.delta.recovered_cases, 1);
+  assert.equal(comparison.delta.recovered_value_paise, 100000);
+});
+
+test('buildComparisonReport reports a negative delta honestly when AI does worse than baseline', () => {
+  const baselineResults = [makeStratResult({ outcome: 'recovered', amount: 100000 })];
+  const aiResults = [makeStratResult({ outcome: 'unrecovered', amount: 100000 })];
+  const comparison = buildComparisonReport({ seed: 1, baselineResults, aiResults });
+  assert.equal(comparison.delta.recovered_cases, -1);
+  assert.ok(comparison.delta.recovered_value_paise < 0);
+});
+
+test('formatComparisonSummary prints both arms and a signed delta', () => {
+  const baselineResults = [makeStratResult({ outcome: 'unrecovered', amount: 100000 })];
+  const aiResults = [makeStratResult({ outcome: 'recovered', amount: 100000 })];
+  const comparison = buildComparisonReport({ seed: 5, baselineResults, aiResults });
+  const summary = formatComparisonSummary(comparison);
+  assert.match(summary, /Baseline:/);
+  assert.match(summary, /AI:/);
+  assert.match(summary, /Delta:\s+\+1 cases/);
 });

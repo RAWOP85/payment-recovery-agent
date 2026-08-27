@@ -363,17 +363,16 @@ test('a record just below the high-value threshold is left alone', () => {
 });
 
 test('expensive interventions are withheld until the later rungs', () => {
-  for (const rungIndex of [0, 1]) {
-    const early = diagnose({
-      failureReason: 'insufficient_funds',
-      amount: 50000,
-      rungIndex,
-      dayOffset: 0,
-    });
-    assert.equal(early.intervention, DEFAULT_INTERVENTION);
-    assert.match(early.reason, /withheld until rung 2/);
-  }
-  for (const rungIndex of [2, 3]) {
+  const early = diagnose({
+    failureReason: 'insufficient_funds',
+    amount: 50000,
+    rungIndex: 0,
+    dayOffset: 0,
+  });
+  assert.equal(early.intervention, DEFAULT_INTERVENTION);
+  assert.match(early.reason, /withheld until rung 1/);
+
+  for (const rungIndex of [1, 2, 3]) {
     const late = diagnose({
       failureReason: 'insufficient_funds',
       amount: 50000,

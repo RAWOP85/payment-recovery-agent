@@ -2,13 +2,14 @@
   "name": "payment-recovery-agent",
   "version": "0.1.0",
   "private": true,
-  "description": "Rule-based agent that detects failed/abandoned Razorpay test-mode payments, escalates recovery nudges on a fixed schedule, and reports honest recovered/unrecovered outcomes.",
+  "description": "Agent that detects failed/abandoned Razorpay test-mode payments, diagnoses a recovery strategy via LLM (deterministic rule-table fallback) gated by a policy engine, escalates nudges on a fixed schedule, and reports honest recovered/unrecovered outcomes with a full audit trail.",
   "type": "commonjs",
   "scripts": {
     "check:razorpay": "node scripts/check-razorpay.js",
     "generate:dataset": "node data/generate-dataset.js",
     "test": "node --test",
-    "recover": "node scripts/run-recovery.js"
+    "recover": "node scripts/run-recovery.js",
+    "evaluate": "node scripts/run-evaluation.js"
   },
   "engines": {
     "node": ">=18"

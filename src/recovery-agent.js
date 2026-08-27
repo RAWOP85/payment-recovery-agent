@@ -33,7 +33,21 @@ const URGENCIES = ['low', 'medium', 'high'];
 // Interventions with a real per-contact cost stay locked until the cheap rungs
 // have demonstrably failed.
 const EXPENSIVE_INTERVENTIONS = new Set(['discount_incentive', 'personal_call_offer']);
-const ESCALATION_RUNG_INDEX = 2; // Day 5 and later
+// Revised from 2 (Day 5) to 1 (Day 2) after the Day-3 baseline-vs-AI
+// evaluation script (scripts/run-evaluation.js) showed a structural zero
+// delta: any record reaching rungIndex 2 has already absorbed two
+// CONFIDENCE_DECAY_PER_NO_RESPONSE hits (0.30 total), which pushed every
+// observed LLM/fallback confidence (0.6-0.8) below CONFIDENCE_THRESHOLD
+// (0.5) in policy-engine.js — so the escalation could never clear the gate
+// it was meant to allow. One decay (0.15) still lets most reasons clear.
+// This is a disclosed, deliberate revision of a previously locked-in
+// constant, made once, in response to that measured finding — not a
+// post-hoc adjustment to flip a specific run's number (see CLAUDE.md).
+const ESCALATION_RUNG_INDEX = 1;
+// Mirrors escalation.js's RUNGS day offsets, duplicated here (rather than
+// imported) to avoid a circular require — escalation.js already requires
+// this module. Used only to keep the audit-log message below accurate.
+const RUNG_DAY_OFFSETS = [0, 2, 5, 7];
 
 const HIGH_VALUE_THRESHOLD_PAISE = 150000; // Rs.1,500
 const CONFIDENCE_DECAY_PER_NO_RESPONSE = 0.15;
@@ -249,7 +263,7 @@ function applyRecordContext(base, { amount, rungIndex, priorOutcomes }) {
   // Never spend on a discount or a phone call before the free nudges have failed.
   if (EXPENSIVE_INTERVENTIONS.has(intervention) && rungIndex < ESCALATION_RUNG_INDEX) {
     notes.push(
-      `${intervention} withheld until rung ${ESCALATION_RUNG_INDEX} (Day 5) — ` +
+      `${intervention} withheld until rung ${ESCALATION_RUNG_INDEX} (Day ${RUNG_DAY_OFFSETS[ESCALATION_RUNG_INDEX]}) — ` +
         `using ${DEFAULT_INTERVENTION} at rung ${rungIndex}.`
     );
     intervention = DEFAULT_INTERVENTION;

@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-27T11:15:49.140Z",
+  "seed": 2026,
+  "label": "Synthetic/simulated comparison over the same seeded dataset — not real customer statistics. Baseline = fixed sms_nudge on every rung, no AI diagnosis. AI = per-failure-reason diagnosis (live LLM or deterministic fallback) gated by policy-engine. NOTE: because the LLM call is live and not temperature-pinned, its recommended intervention can vary between runs — observed to default to sms_nudge in ~6/7 sampled calls, occasionally differentiating (see seed 999: +1 case, +Rs.3332.68). This run’s delta is reported as measured, not selected.",
+  "baseline": {
+    "total_cases": 120,
+    "recovered_cases": 69,
+    "unrecovered_cases": 51,
+    "case_recovery_rate": 0.575,
+    "total_value_paise": 16646418,
+    "recovered_value_paise": 10949131,
+    "value_recovery_rate": 0.6577
+  },
+  "ai": {
+    "total_cases": 120,
+    "recovered_cases": 69,
+    "unrecovered_cases": 51,
+    "case_recovery_rate": 0.575,
+    "total_value_paise": 16646418,
+    "recovered_value_paise": 10949131,
+    "value_recovery_rate": 0.6577
+  },
+  "delta": {
+    "recovered_cases": 0,
+    "case_recovery_rate": 0,
+    "recovered_value_paise": 0,
+    "value_recovery_rate": 0
+  }
+}

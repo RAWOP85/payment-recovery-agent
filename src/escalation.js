@@ -5,6 +5,26 @@ const { decide: decidePolicy } = require('./policy-engine');
 const RUNGS = [0, 2, 5, 7]; // day offsets from failed_at — the hard stop is structural
 const DAY_MS = 24 * 60 * 60 * 1000;
 
+// The 'baseline' arm for the evaluation script (scripts/run-evaluation.js):
+// no diagnose()/decidePolicy() call at all, every rung sent as a plain
+// sms_nudge. This reproduces the pre-AI-layer probability model exactly
+// (INTERVENTION_MULTIPLIER.sms_nudge === 1.0), so the baseline-vs-AI delta
+// measures the intervention choice alone, not a strawman.
+const BASELINE_INTERVENTION = 'sms_nudge';
+const BASELINE_AI_OUTPUT = {
+  diagnosis: 'baseline_no_diagnosis',
+  intervention: BASELINE_INTERVENTION,
+  urgency: 'medium',
+  confidence: 1,
+  reason: 'Baseline arm: fixed sms_nudge on every rung, no AI diagnosis performed.',
+  source: 'baseline_rule',
+};
+const BASELINE_POLICY = {
+  executed_intervention: BASELINE_INTERVENTION,
+  policy_decision: 'allowed',
+  policy_reason: 'Baseline strategy — AI diagnosis and policy gating bypassed by design; fixed sms_nudge used on every rung.',
+};
+
 function simulatedTimestamp(failedAt, dayOffset) {
   return new Date(new Date(failedAt).getTime() + dayOffset * DAY_MS).toISOString();
 }
@@ -51,7 +71,7 @@ function buildReason(record, rungIndex, outcome, aiContext) {
 // (which rung, whether to keep going) stays entirely outside this exchange —
 // the AI and policy layer only ever choose WHICH nudge, per the project's
 // hard-stop and "no infinite retrying" constraints.
-function processRecord(record, rng) {
+function processRecord(record, rng, { strategy = 'ai' } = {}) {
   const attempts = [];
   let outcome = 'unrecovered';
   let recoveredAtRung = null;
@@ -60,20 +80,27 @@ function processRecord(record, rng) {
   for (let rungIndex = 0; rungIndex < RUNGS.length; rungIndex++) {
     const dayOffset = RUNGS[rungIndex];
 
-    const aiOutput = diagnose({
-      failureReason: record.failure_reason,
-      amount: record.amount,
-      rungIndex,
-      dayOffset,
-      priorOutcomes,
-    });
+    let aiOutput;
+    let policy;
+    if (strategy === 'baseline') {
+      aiOutput = BASELINE_AI_OUTPUT;
+      policy = BASELINE_POLICY;
+    } else {
+      aiOutput = diagnose({
+        failureReason: record.failure_reason,
+        amount: record.amount,
+        rungIndex,
+        dayOffset,
+        priorOutcomes,
+      });
 
-    const policy = decidePolicy({
-      aiOutput,
-      rungIndex,
-      rungCount: RUNGS.length,
-      recovered: false, // this rung's outcome isn't known yet — that's what we're about to decide
-    });
+      policy = decidePolicy({
+        aiOutput,
+        rungIndex,
+        rungCount: RUNGS.length,
+        recovered: false, // this rung's outcome isn't known yet — that's what we're about to decide
+      });
+    }
 
     const attemptOutcome = decideOutcome({
       failureReason: record.failure_reason,

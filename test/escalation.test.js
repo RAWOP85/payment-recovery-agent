@@ -79,23 +79,22 @@ test('processRecord attaches an AI diagnosis and an approved intervention to eve
 });
 
 test('a high-value record is re-diagnosed and escalated to personal_call_offer once policy allows it', () => {
-  // otp_timeout starts at confidence 0.8 (vs. checkout_abandoned's 0.65), so at
-  // rung 2 (Day 5, the first rung where an expensive intervention isn't
-  // withheld) two prior no_responses have only decayed it to 0.8 - 2*0.15 =
-  // 0.50 — exactly at the policy threshold, so it clears rather than being
-  // overridden. This is the one rung where both gates open at once.
+  // otp_timeout starts at confidence 0.8; at rung 1 (Day 2, the first rung
+  // where an expensive intervention isn't withheld now that
+  // ESCALATION_RUNG_INDEX is 1) one prior no_response has only decayed it to
+  // 0.8 - 1*0.15 = 0.65, comfortably above the 0.5 policy threshold.
   const highValueRecord = { ...RECORD, amount: 500000, failure_reason: 'otp_timeout' };
   const result = processRecord(highValueRecord, () => 0.99); // never recovers -> all 4 rungs
-  const day5Attempt = result.attempts[2];
-  assert.equal(day5Attempt.diagnosis, 'high_value_at_risk');
-  assert.equal(day5Attempt.intervention, 'personal_call_offer');
-  assert.equal(day5Attempt.policy_decision, 'allowed');
+  const day2Attempt = result.attempts[1];
+  assert.equal(day2Attempt.diagnosis, 'high_value_at_risk');
+  assert.equal(day2Attempt.intervention, 'personal_call_offer');
+  assert.equal(day2Attempt.policy_decision, 'allowed');
 });
 
-test('an expensive intervention is withheld on early rungs regardless of what the AI recommends', () => {
+test('an expensive intervention is withheld on the very first rung regardless of what the AI recommends', () => {
   const highValueRecord = { ...RECORD, amount: 500000 };
   const result = processRecord(highValueRecord, () => 0.99);
-  // Day 0 (rungIndex 0) is before ESCALATION_RUNG_INDEX (2) — personal_call_offer
+  // Day 0 (rungIndex 0) is before ESCALATION_RUNG_INDEX (1) — personal_call_offer
   // must not fire yet, however high-value the diagnosis, per the project's own
   // no-premature-spend rule in recovery-agent.js.
   assert.equal(result.attempts[0].intervention, 'sms_nudge');
@@ -106,6 +105,37 @@ test("buildReason's base ladder text is unchanged when no aiContext is passed (b
   assert.match(withoutAi, /Day 0/);
   assert.match(withoutAi, /checkout_abandoned/);
   assert.doesNotMatch(withoutAi, /AI diagnosis/);
+});
+
+// --- baseline strategy (for scripts/run-evaluation.js) --------------------
+
+test("processRecord with strategy 'baseline' uses a fixed sms_nudge on every rung, no AI diagnosis", () => {
+  const result = processRecord(RECORD, () => 0.99, { strategy: 'baseline' }); // never recovers -> all 4 rungs
+  for (const attempt of result.attempts) {
+    assert.equal(attempt.intervention, 'sms_nudge');
+    assert.equal(attempt.ai_source, 'baseline_rule');
+    assert.equal(attempt.policy_decision, 'allowed');
+  }
+});
+
+test("baseline strategy never escalates to an expensive intervention, even for a high-value record", () => {
+  const highValueRecord = { ...RECORD, amount: 500000 };
+  const result = processRecord(highValueRecord, () => 0.99, { strategy: 'baseline' });
+  for (const attempt of result.attempts) {
+    assert.equal(attempt.intervention, 'sms_nudge');
+  }
+});
+
+test('baseline strategy reproduces the original sms_nudge-only probability model (same outcome as an explicit AI sms_nudge run when confidence clears policy)', () => {
+  // otp_timeout's fallback strategy is sms_nudge/0.8 confidence, which the
+  // policy engine allows outright — so on rung 0 (before any confidence
+  // decay) the AI arm and the baseline arm should decide identically off the
+  // same rng stream, since both end up feeding decideOutcome the exact same
+  // failureReason/rungIndex/intervention triple.
+  const record = { ...RECORD, failure_reason: 'otp_timeout' };
+  const baseline = processRecord(record, () => 0.5, { strategy: 'baseline' });
+  const ai = processRecord(record, () => 0.5, { strategy: 'ai' });
+  assert.equal(baseline.attempts[0].outcome, ai.attempts[0].outcome);
 });
 
 test('buildReason appends the AI diagnosis and policy reason when aiContext is passed', () => {
