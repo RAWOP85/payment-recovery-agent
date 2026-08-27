@@ -88,3 +88,22 @@ test('formatSummary omits the live-record line when no record has source "live"'
   const summary = formatSummary(report);
   assert.doesNotMatch(summary, /Live Razorpay record/);
 });
+
+test('buildReport defaults ai_strategy_manifest and ai_fallback_log to empty arrays when omitted', () => {
+  const results = [makeResult({ customerId: 'a', reason: 'otp_timeout', outcome: 'recovered', recoveredAtRung: 2, attemptCount: 2 })];
+  const report = buildReport({ seed: 7, results });
+  assert.deepEqual(report.ai_strategy_manifest, []);
+  assert.deepEqual(report.ai_fallback_log, []);
+});
+
+test('buildReport embeds the AI strategy manifest and formatSummary reports the llm-vs-fallback split honestly', () => {
+  const results = [makeResult({ customerId: 'a', reason: 'otp_timeout', outcome: 'recovered', recoveredAtRung: 2, attemptCount: 2 })];
+  const aiStrategyManifest = [
+    { failure_reason: 'otp_timeout', source: 'llm', intervention: 'sms_nudge' },
+    { failure_reason: 'card_declined', source: 'fallback_table', intervention: 'email_reminder' },
+  ];
+  const report = buildReport({ seed: 7, results, aiStrategyManifest });
+  assert.deepEqual(report.ai_strategy_manifest, aiStrategyManifest);
+  const summary = formatSummary(report);
+  assert.match(summary, /AI diagnosis: 1\/2 failure reasons used a live LLM strategy, 1 fell back to the rule table\./);
+});

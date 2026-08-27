@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "description": "Rule-based agent that detects failed/abandoned Razorpay test-mode payments, escalates recovery nudges on a fixed schedule, and reports honest recovered/unrecovered outcomes.",
-  "main": "src/index.js",
   "type": "commonjs",
   "scripts": {
     "check:razorpay": "node scripts/check-razorpay.js",

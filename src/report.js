@@ -4,7 +4,7 @@ function emptyReasonBucket() {
   return { recovered: 0, unrecovered: 0 };
 }
 
-function buildReport({ seed, results }) {
+function buildReport({ seed, results, aiStrategyManifest = [], aiFallbackLog = [] }) {
   const totals = { processed: results.length, recovered: 0, unrecovered: 0 };
   const byFailureReason = {};
   const byRungRecovered = Object.fromEntries(RUNGS.map((day) => [day, 0]));
@@ -29,6 +29,11 @@ function buildReport({ seed, results }) {
     totals,
     by_failure_reason: byFailureReason,
     by_rung_recovered: byRungRecovered,
+    // Lets a reviewer see, per failure_reason, whether the run's intervention
+    // choices came from a real LLM call or the deterministic fallback table —
+    // never hidden, same honesty standard as the recovered/unrecovered split.
+    ai_strategy_manifest: aiStrategyManifest,
+    ai_fallback_log: aiFallbackLog,
     records: results.map((result) => ({
       customer_id: result.customer_id,
       failure_reason: result.failure_reason,
@@ -57,6 +62,14 @@ function formatSummary(report) {
   lines.push('  Recovered at rung (day offset):');
   for (const [rung, count] of Object.entries(report.by_rung_recovered)) {
     lines.push(`    day ${rung}: ${count}`);
+  }
+  if (Array.isArray(report.ai_strategy_manifest) && report.ai_strategy_manifest.length > 0) {
+    const llmCount = report.ai_strategy_manifest.filter((entry) => entry.source === 'llm').length;
+    const fallbackCount = report.ai_strategy_manifest.length - llmCount;
+    lines.push(
+      `  AI diagnosis: ${llmCount}/${report.ai_strategy_manifest.length} failure reasons used a live LLM strategy` +
+        (fallbackCount > 0 ? `, ${fallbackCount} fell back to the rule table.` : '.')
+    );
   }
   const liveRecord = report.records.find((record) => record.source === 'live');
   if (liveRecord) {

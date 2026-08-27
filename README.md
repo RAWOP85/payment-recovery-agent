@@ -87,3 +87,25 @@ aggregator has right now.
    ```
    npm run recover -- --live
    ```
+   `--live` checks the Payment Link's status once, immediately after creating
+   it — useful for a fast smoke test, but too fast for anyone to actually pay
+   the link first.
+5. To actually demonstrate a real recovery, use `--live-wait` instead: it
+   prints the pay URL and pauses before checking status, giving you a window
+   to open the link and pay it with a Razorpay test-mode card. The default
+   wait is 75 seconds (`LIVE_WAIT_MS`), which is too short once you factor in
+   opening the link and entering test-card details — override it with the
+   `LIVE_WAIT_MS` environment variable (in milliseconds):
+   ```
+   LIVE_WAIT_MS=240000 npm run recover -- --live-wait
+   ```
+   Use a **domestic** Razorpay test card during the window — `4111 1111 1111
+   1111` is commonly assumed to work everywhere but Razorpay classifies it as
+   *international*, which this payment link rejects. Use one of:
+   - Visa: `4100 2800 0000 1007`
+   - Mastercard: `5500 6700 0000 1002`
+   - any future expiry date, any CVV, and any 4+ digit OTP if prompted.
+
+   If the link isn't paid within the window, the run still completes and
+   honestly reports that record as unrecovered — the live leg is never
+   allowed to fail silently or crash the batch.

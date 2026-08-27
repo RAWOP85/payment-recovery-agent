@@ -5,6 +5,12 @@ const path = require('path');
 
 const { createRng } = require('../src/recovery-simulator');
 const { processRecord } = require('../src/escalation');
+const {
+  warmStrategyCache,
+  getFallbackLog,
+  FALLBACK_STRATEGY,
+  UNKNOWN_FALLBACK,
+} = require('../src/recovery-agent');
 const { startLog, appendEntry } = require('../src/audit-log');
 const { buildReport, formatSummary } = require('../src/report');
 
@@ -45,6 +51,39 @@ async function main() {
 
   const records = JSON.parse(fs.readFileSync(DATASET_PATH, 'utf8'));
 
+  // One diagnosis call per unique failure_reason (4 for this dataset), done up
+  // front so escalation.js's per-record loop can stay synchronous. Missing
+  // ANTHROPIC_API_KEY, a timeout, or a malformed response all degrade to the
+  // deterministic rule table per-reason rather than failing the run — recorded
+  // honestly below via warmStrategyCache()'s own returned manifest (which
+  // includes fallback entries, unlike getStrategyManifest()'s LLM-only cache
+  // view) and getFallbackLog(), never hidden.
+  const uniqueFailureReasons = [...new Set(records.map((record) => record.failure_reason))];
+  let strategyManifest;
+  try {
+    strategyManifest = await warmStrategyCache({ failureReasons: uniqueFailureReasons, logger: console });
+  } catch (err) {
+    // warmStrategyCache() is documented to catch its own per-reason failures
+    // internally and never reject — but this is still a real network call, and
+    // this project's hardest-learned lesson (see CLAUDE.md) is that a live API
+    // failure must never abort the run before data/report.json is written.
+    // Treat an unexpected rejection here the same way the --live leg below is
+    // treated: report it honestly and degrade to the deterministic rule table
+    // for every reason, rather than losing the whole batch's results.
+    console.error(
+      `AI strategy warm-up failed unexpectedly (${err.message}) — falling back to the rule table for all failure reasons.`
+    );
+    strategyManifest = uniqueFailureReasons.map((reason) => {
+      const table = FALLBACK_STRATEGY[reason];
+      return {
+        failure_reason: reason,
+        source: table ? 'fallback_table' : 'fallback_unknown_reason',
+        fallback_reason: `warmStrategyCache rejected unexpectedly: ${err.message}`,
+        ...(table || UNKNOWN_FALLBACK),
+      };
+    });
+  }
+
   startLog();
   const results = records.map((record) => {
     const result = processRecord(record, rng);
@@ -83,7 +122,12 @@ async function main() {
     }
   }
 
-  const report = buildReport({ seed, results });
+  const report = buildReport({
+    seed,
+    results,
+    aiStrategyManifest: strategyManifest,
+    aiFallbackLog: getFallbackLog(),
+  });
   fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
 
   console.log(formatSummary(report));
