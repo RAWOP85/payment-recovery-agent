@@ -184,3 +184,29 @@ diagnosis + policy-engine layer, matching what the codebase actually does.
   instead of once after it — not done, since the immediate goal (one clean recovered record) is
   already met and CLAUDE.md's own scope note says rule-based/simple over robust for a hackathon
   timeline; worth revisiting only if another live demo run is needed under tighter time pressure.
+
+**Addendum, same day — verified the zero delta is not a wiring bug, and found a real metric the
+evaluation report was missing.** User specifically asked to confirm `policy-engine.decide()`'s
+`executed_intervention` for every `card_declined` record (26 in the dataset, 9 high-value)
+rather than accept the zero-delta finding at face value. Traced `diagnose()`'s raw recommendation
+separately from `decide()`'s post-gate output for a representative high-value record across all
+4 rungs: the AI genuinely recommends `personal_call_offer` from Day 2 onward (proving the
+`ESCALATION_RUNG_INDEX` fix works), and policy legitimately vetoes it purely on the 0.5
+confidence floor — not a wiring defect. Separately confirmed (fresh LLM call, different manifest)
+that `personal_call_offer` does execute for real in 15/33 high-value records, computed the exact
+`decideOutcome` probability bands per rung directly from `BASE_RECOVERY_PROBABILITY`/`RUNG_DECAY`
+(6-10 points wide), and confirmed a zero-flip outcome across those 15 is a plausible RNG-draw
+coincidence, not a bug — baseline and AI share the same draw at each rung, so AI's higher
+threshold can only ever do as well or better.
+
+**Found instead: a same-final-outcome-but-faster-AI-recovery pattern the report didn't measure.**
+3 of 33 high-value records (later confirmed as 2 on the official seed-2026 re-run) recover at the
+identical final outcome in both arms but in fewer AI-arm attempts (e.g. Day 2 vs. Day 5) — 0 ever
+slower. `src/report.js` gained `avg_attempts_when_recovered` (per arm, in `summarizeStrategy`) and
+`compareRecoverySpeed()` (paired by `customer_id`, feeding a new top-level `recovery_speed` block
+in `buildComparisonReport`'s output: `faster_recovery_cases`/`slower_recovery_cases`/
+`same_speed_recovery_cases`) — additive, `delta` untouched. 8 new tests, 102/102 passing.
+Re-ran the official `--seed 2026` evaluation to pick this up:
+`avg_attempts_when_recovered` 2.087 (baseline) vs. 2.058 (AI); `recovery_speed`: 2 faster, 0
+slower, 67 same speed — a real, honest, always-non-negative secondary finding even though the
+recovered/unrecovered `delta` is exactly 0.

@@ -54,11 +54,18 @@ function round4(value) {
 // AI). `results` elements are processRecord() results merged with the
 // originating record's `amount` (paise) by the caller — this module never
 // reads data/failed-payments.json itself.
+//
+// `avg_attempts_when_recovered` only counts results carrying an `attempts`
+// array (processRecord()'s real shape) — a caller that omits it (as some
+// existing test fixtures do) is treated as "no attempts data available"
+// (null), not as zero attempts, so it can never silently skew the average.
 function summarizeStrategy(results) {
   const totalCases = results.length;
   let recoveredCases = 0;
   let totalValuePaise = 0;
   let recoveredValuePaise = 0;
+  let recoveredWithAttemptsData = 0;
+  let totalAttemptsWhenRecovered = 0;
 
   for (const result of results) {
     const amount = Number.isFinite(result.amount) ? result.amount : 0;
@@ -66,6 +73,10 @@ function summarizeStrategy(results) {
     if (result.outcome === 'recovered') {
       recoveredCases += 1;
       recoveredValuePaise += amount;
+      if (Array.isArray(result.attempts)) {
+        recoveredWithAttemptsData += 1;
+        totalAttemptsWhenRecovered += result.attempts.length;
+      }
     }
   }
 
@@ -77,7 +88,38 @@ function summarizeStrategy(results) {
     total_value_paise: totalValuePaise,
     recovered_value_paise: recoveredValuePaise,
     value_recovery_rate: totalValuePaise === 0 ? 0 : round4(recoveredValuePaise / totalValuePaise),
+    avg_attempts_when_recovered:
+      recoveredWithAttemptsData === 0 ? null : round4(totalAttemptsWhenRecovered / recoveredWithAttemptsData),
   };
+}
+
+// Pairs baseline/AI results by customer_id (not array position — defensive
+// against either arm's ordering ever changing independently) and counts, among
+// records recovered in BOTH arms, how often the AI arm got there in fewer
+// attempts (faster — earlier rung, lower operational cost, same outcome),
+// more attempts (slower), or the same number. This exists because the
+// recovered/unrecovered delta above can measure exactly zero even when the AI
+// arm has a real, honest advantage: reaching the identical final outcome
+// sooner. Records not recovered in both arms aren't comparable on speed and
+// are excluded, not counted as either faster or slower.
+function compareRecoverySpeed(baselineResults, aiResults) {
+  const baselineByCustomer = new Map(baselineResults.map((r) => [r.customer_id, r]));
+  let fasterCases = 0;
+  let slowerCases = 0;
+  let sameSpeedCases = 0;
+
+  for (const aiResult of aiResults) {
+    const baselineResult = baselineByCustomer.get(aiResult.customer_id);
+    if (!baselineResult) continue;
+    if (aiResult.outcome !== 'recovered' || baselineResult.outcome !== 'recovered') continue;
+    if (!Array.isArray(aiResult.attempts) || !Array.isArray(baselineResult.attempts)) continue;
+
+    if (aiResult.attempts.length < baselineResult.attempts.length) fasterCases += 1;
+    else if (aiResult.attempts.length > baselineResult.attempts.length) slowerCases += 1;
+    else sameSpeedCases += 1;
+  }
+
+  return { faster_recovery_cases: fasterCases, slower_recovery_cases: slowerCases, same_speed_recovery_cases: sameSpeedCases };
 }
 
 // `baselineResults` and `aiResults` must cover the same records with each
@@ -90,6 +132,7 @@ function summarizeStrategy(results) {
 function buildComparisonReport({ seed, baselineResults, aiResults }) {
   const baseline = summarizeStrategy(baselineResults);
   const ai = summarizeStrategy(aiResults);
+  const recoverySpeed = compareRecoverySpeed(baselineResults, aiResults);
 
   return {
     generated_at: new Date().toISOString(),
@@ -110,6 +153,10 @@ function buildComparisonReport({ seed, baselineResults, aiResults }) {
       recovered_value_paise: ai.recovered_value_paise - baseline.recovered_value_paise,
       value_recovery_rate: round4(ai.value_recovery_rate - baseline.value_recovery_rate),
     },
+    // Separate from `delta` on purpose: this can show a real AI advantage
+    // (faster_recovery_cases > 0) even when `delta` is entirely zero — same
+    // final recovered/unrecovered outcome, reached in fewer attempts.
+    recovery_speed: recoverySpeed,
   };
 }
 
@@ -136,6 +183,13 @@ function formatComparisonSummary(comparison) {
       `${sign(comparison.delta.recovered_value_paise)}${rupees(comparison.delta.recovered_value_paise)} ` +
       `(${sign(comparison.delta.value_recovery_rate)}${pct(comparison.delta.value_recovery_rate)})`
   );
+  if (comparison.recovery_speed) {
+    const { faster_recovery_cases, slower_recovery_cases, same_speed_recovery_cases } = comparison.recovery_speed;
+    lines.push(
+      `  Recovery speed (same outcome, both arms): ${faster_recovery_cases} faster with AI, ` +
+        `${slower_recovery_cases} slower, ${same_speed_recovery_cases} same speed.`
+    );
+  }
   return lines.join('\n');
 }
 
@@ -176,6 +230,7 @@ module.exports = {
   buildReport,
   formatSummary,
   summarizeStrategy,
+  compareRecoverySpeed,
   buildComparisonReport,
   formatComparisonSummary,
 };

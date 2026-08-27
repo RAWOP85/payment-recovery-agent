@@ -4,6 +4,7 @@ const {
   buildReport,
   formatSummary,
   summarizeStrategy,
+  compareRecoverySpeed,
   buildComparisonReport,
   formatComparisonSummary,
 } = require('../src/report');
@@ -179,4 +180,80 @@ test('formatComparisonSummary prints both arms and a signed delta', () => {
   assert.match(summary, /Baseline:/);
   assert.match(summary, /AI:/);
   assert.match(summary, /Delta:\s+\+1 cases/);
+});
+
+// --- recovery speed (same outcome, fewer/more attempts) --------------------
+
+function makeAttemptsResult(customerId, outcome, attemptCount) {
+  return { customer_id: customerId, outcome, attempts: new Array(attemptCount).fill({}) };
+}
+
+test('summarizeStrategy computes avg_attempts_when_recovered only over results carrying attempts data', () => {
+  const results = [
+    makeAttemptsResult('a', 'recovered', 1),
+    makeAttemptsResult('b', 'recovered', 3),
+    makeAttemptsResult('c', 'unrecovered', 4),
+  ];
+  const summary = summarizeStrategy(results);
+  assert.equal(summary.avg_attempts_when_recovered, 2);
+});
+
+test('summarizeStrategy reports avg_attempts_when_recovered as null when no result carries attempts data', () => {
+  const summary = summarizeStrategy([makeStratResult({ outcome: 'recovered', amount: 100000 })]);
+  assert.equal(summary.avg_attempts_when_recovered, null);
+});
+
+test('compareRecoverySpeed counts a same-outcome record as faster when AI uses fewer attempts', () => {
+  const baselineResults = [makeAttemptsResult('cust_1', 'recovered', 3)];
+  const aiResults = [makeAttemptsResult('cust_1', 'recovered', 2)];
+  const speed = compareRecoverySpeed(baselineResults, aiResults);
+  assert.equal(speed.faster_recovery_cases, 1);
+  assert.equal(speed.slower_recovery_cases, 0);
+  assert.equal(speed.same_speed_recovery_cases, 0);
+});
+
+test('compareRecoverySpeed counts a same-outcome record as slower when AI uses more attempts', () => {
+  const baselineResults = [makeAttemptsResult('cust_1', 'recovered', 2)];
+  const aiResults = [makeAttemptsResult('cust_1', 'recovered', 3)];
+  const speed = compareRecoverySpeed(baselineResults, aiResults);
+  assert.equal(speed.faster_recovery_cases, 0);
+  assert.equal(speed.slower_recovery_cases, 1);
+});
+
+test('compareRecoverySpeed excludes records not recovered in both arms', () => {
+  const baselineResults = [makeAttemptsResult('cust_1', 'unrecovered', 4)];
+  const aiResults = [makeAttemptsResult('cust_1', 'recovered', 2)];
+  const speed = compareRecoverySpeed(baselineResults, aiResults);
+  assert.equal(speed.faster_recovery_cases, 0);
+  assert.equal(speed.slower_recovery_cases, 0);
+  assert.equal(speed.same_speed_recovery_cases, 0);
+});
+
+test('compareRecoverySpeed matches by customer_id, not array position', () => {
+  const baselineResults = [
+    makeAttemptsResult('cust_2', 'recovered', 4),
+    makeAttemptsResult('cust_1', 'recovered', 3),
+  ];
+  const aiResults = [makeAttemptsResult('cust_1', 'recovered', 1)];
+  const speed = compareRecoverySpeed(baselineResults, aiResults);
+  assert.equal(speed.faster_recovery_cases, 1);
+});
+
+test('buildComparisonReport embeds recovery_speed alongside the case/value delta', () => {
+  const baselineResults = [makeAttemptsResult('cust_1', 'recovered', 3)];
+  const aiResults = [makeAttemptsResult('cust_1', 'recovered', 2)];
+  const comparison = buildComparisonReport({ seed: 1, baselineResults, aiResults });
+  assert.deepEqual(comparison.recovery_speed, {
+    faster_recovery_cases: 1,
+    slower_recovery_cases: 0,
+    same_speed_recovery_cases: 0,
+  });
+});
+
+test('formatComparisonSummary reports recovery speed', () => {
+  const baselineResults = [makeAttemptsResult('cust_1', 'recovered', 3)];
+  const aiResults = [makeAttemptsResult('cust_1', 'recovered', 2)];
+  const comparison = buildComparisonReport({ seed: 1, baselineResults, aiResults });
+  const summary = formatComparisonSummary(comparison);
+  assert.match(summary, /Recovery speed.*1 faster with AI, 0 slower, 0 same speed/);
 });
