@@ -76,6 +76,10 @@ async function requestJson({
         'x-api-key': apiKey,
         'anthropic-version': ANTHROPIC_VERSION,
       },
+      // No `temperature`/`top_p`/`top_k` here — the Claude 5 family models this
+      // project targets (Sonnet 5, Opus 5, Fable 5) reject them with HTTP 400,
+      // not a deprecation warning. Confirmed via a raw fetch probe against this
+      // exact endpoint; see test/llm-client.test.js and recovery-agent.test.js.
       body: JSON.stringify({
         model,
         max_tokens: maxTokens,

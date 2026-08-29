@@ -5,7 +5,9 @@ Razorpay test-mode payments, escalates recovery nudges on a fixed schedule, stop
 after a fixed number of attempts, and reports what it recovered versus what it
 couldn't — honestly, including the failures.
 
-See `CLAUDE.md` for the full spec and constraints.
+See `CLAUDE.md` for the full spec and constraints, and `ARCHITECTURE.md` for how the
+system is actually built (pipeline, the AI + policy-gate layer, the real Razorpay
+integration, and the evaluation methodology).
 
 ## Why this exists
 
@@ -91,11 +93,15 @@ aggregator has right now.
    it — useful for a fast smoke test, but too fast for anyone to actually pay
    the link first.
 5. To actually demonstrate a real recovery, use `--live-wait` instead: it
-   prints the pay URL and pauses before checking status, giving you a window
-   to open the link and pay it with a Razorpay test-mode card. The default
-   wait is 75 seconds (`LIVE_WAIT_MS`), which is too short once you factor in
-   opening the link and entering test-card details — override it with the
-   `LIVE_WAIT_MS` environment variable (in milliseconds):
+   prints the pay URL, then polls the Payment Link's status every 5 seconds
+   (`POLL_INTERVAL_MS`) until it's paid or a hard cap of 75 seconds
+   (`LIVE_WAIT_MS`) is reached — whichever comes first. Polling (rather than a
+   single check after one fixed sleep) means the run returns as soon as the
+   link is paid instead of always idling out the full window, and a payment
+   that lands late in a long window is no longer invisible to it. The default
+   cap is too short once you factor in opening the link and entering test-card
+   details — override it with the `LIVE_WAIT_MS` environment variable (in
+   milliseconds; `POLL_INTERVAL_MS` is also overridable but rarely needs to be):
    ```
    LIVE_WAIT_MS=240000 npm run recover -- --live-wait
    ```

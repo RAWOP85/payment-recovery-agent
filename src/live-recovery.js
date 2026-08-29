@@ -28,18 +28,52 @@ async function fetchPaymentLinkStatus(razorpayClient, paymentLinkId) {
 }
 
 const LIVE_WAIT_MS = Number(process.env.LIVE_WAIT_MS) || 75000;
+// How often to re-check the link's status during the wait window, rather than
+// only once after the full window elapses. A single post-wait check only
+// catches a payment that happens to land before LIVE_WAIT_MS is up; periodic
+// polling detects it the moment it happens, so the run doesn't have to blindly
+// idle out the rest of a long window once the link is already paid. This does
+// NOT extend how long we're willing to wait overall — LIVE_WAIT_MS is still
+// the hard cap, so this stays a bounded wait, not open-ended retrying.
+const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS) || 5000;
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Polls the link's status every `pollIntervalMs` until it's paid or
+// `totalWaitMs` has elapsed, whichever comes first, then returns the last
+// observed status. Elapsed time is bounded by `Date.now()` against a fixed
+// deadline (rather than counting fixed-size sleeps) so the final sleep is
+// trimmed to land on the deadline instead of overshooting it.
+async function pollUntilPaidOrTimeout(razorpayClient, linkId, { totalWaitMs, pollIntervalMs }) {
+  const deadline = Date.now() + totalWaitMs;
+  let status = await fetchPaymentLinkStatus(razorpayClient, linkId);
+
+  while (status !== 'paid' && Date.now() < deadline) {
+    await wait(Math.min(pollIntervalMs, Math.max(0, deadline - Date.now())));
+    status = await fetchPaymentLinkStatus(razorpayClient, linkId);
+  }
+
+  return status;
+}
+
 async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWait = false } = {}) {
   const link = await createDemoPaymentLink(razorpayClient, record);
 
+  let finalStatus;
   if (liveWait) {
     console.log(`Pay this link now to test recovery: ${link.short_url}`);
-    console.log(`Waiting ${LIVE_WAIT_MS / 1000}s before checking payment status...`);
-    await wait(LIVE_WAIT_MS);
+    console.log(
+      `Polling status every ${POLL_INTERVAL_MS / 1000}s for up to ${LIVE_WAIT_MS / 1000}s (returns as soon as it's paid)...`
+    );
+    finalStatus = await pollUntilPaidOrTimeout(razorpayClient, link.id, {
+      totalWaitMs: LIVE_WAIT_MS,
+      pollIntervalMs: POLL_INTERVAL_MS,
+    });
+    console.log(`Final Razorpay status after polling: ${finalStatus}`);
+  } else {
+    finalStatus = await fetchPaymentLinkStatus(razorpayClient, link.id);
   }
 
   const attempts = [];
@@ -48,8 +82,7 @@ async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWai
 
   for (let rungIndex = 0; rungIndex < RUNGS.length; rungIndex++) {
     const dayOffset = RUNGS[rungIndex];
-    const status = await fetchPaymentLinkStatus(razorpayClient, link.id);
-    const attemptOutcome = status === 'paid' ? 'recovered' : 'no_response';
+    const attemptOutcome = finalStatus === 'paid' ? 'recovered' : 'no_response';
 
     attempts.push({
       timestamp: simulatedTimestamp(record.failed_at, dayOffset),
@@ -57,7 +90,7 @@ async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWai
       rung: dayOffset,
       day_offset: dayOffset,
       action: actionFor(rungIndex, attemptOutcome),
-      reason: `${buildReason(record, rungIndex, attemptOutcome)} [live Razorpay status: ${status}]`,
+      reason: `${buildReason(record, rungIndex, attemptOutcome)} [live Razorpay status: ${finalStatus}]`,
       outcome: attemptOutcome,
     });
 
