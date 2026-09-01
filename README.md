@@ -1,13 +1,34 @@
 # Payment Recovery Agent
 
-Rule-based agent (Razorpay AI Buildathon, Track 03) that detects failed/abandoned
-Razorpay test-mode payments, escalates recovery nudges on a fixed schedule, stops
-after a fixed number of attempts, and reports what it recovered versus what it
-couldn't — honestly, including the failures.
+Agent (Razorpay AI Buildathon, Track 03) that detects failed/abandoned Razorpay
+test-mode payments, diagnoses each failure with an LLM (deterministic rule-table
+fallback) gated by a policy engine, escalates recovery nudges on a fixed
+schedule, stops after a fixed number of attempts, and reports what it recovered
+versus what it couldn't — honestly, including the failures.
 
 See `CLAUDE.md` for the full spec and constraints, and `ARCHITECTURE.md` for how the
 system is actually built (pipeline, the AI + policy-gate layer, the real Razorpay
 integration, and the evaluation methodology).
+
+## Results — measured, not cherry-picked
+
+- **Batch run** (`data/report.json`): 121 records processed — **68 recovered,
+  53 unrecovered**. Every escalation decision is logged in
+  `data/audit-log.jsonl` with a timestamp and a stated reason.
+- **One real Razorpay recovery** (`demo_live_001`): the agent created a real
+  test-mode Payment Link (`plink_TUmAteDaUvnvM1`), it was genuinely paid, and
+  the agent detected it — recovered at rung 0, 1 attempt, `source: "live"`.
+  The same report carries a 4/4 live-LLM `ai_strategy_manifest`
+  (Claude Sonnet 5), so the AI layer and the real integration are proven in
+  one artifact.
+- **Baseline vs. AI evaluation** (`data/evaluation-report.json`, seed 2026,
+  chosen unseen): both arms recovered **69/120 cases (57.5%)** — **delta 0,
+  reported as measured, not smoothed over**. Secondary finding: the AI arm
+  recovers 2 cases in fewer attempts than baseline, and 0 in more. Why the
+  headline delta is zero (and the disclosure around it) is explained in
+  `ARCHITECTURE.md`.
+- **Tests**: 102/102 passing (`npm test`).
+- **Pitch video**: _coming before submission._
 
 ## Why this exists
 
@@ -24,11 +45,13 @@ exotic than that, because nothing more exotic is legal or necessary.
   most transactions in India. This project never touches authentication — it
   only reminds a human to retry, so the mandate isn't a constraint here.
 - Track 02 (Risk Manager) needs a defensible synthetic fraud dataset and
-  measured precision/recall — more data-science surface area than a
-  rule-based, solo, week-long build can responsibly deliver.
-- Rule-based logic (no ML) is a deliberate choice, not a shortcut: the
-  requirement here is "did we follow a consistent, auditable policy," which a
-  lookup table and a timestamped log answer better than a model would.
+  measured precision/recall — more data-science surface area than a solo,
+  week-long build can responsibly deliver.
+- The AI is deliberately scoped, not sprinkled on: an LLM diagnoses each
+  failure and recommends an intervention, but a deterministic policy engine
+  makes every final call, and every decision lands in a timestamped audit
+  log. The requirement here is "did we follow a consistent, auditable
+  policy" — so the model advises, the rules decide.
 
 **What it actually targets.** NPCI splits UPI failures into *Technical
 Decline* (bank/NPCI infrastructure — not fixable by any app, ~0.7-0.8% of

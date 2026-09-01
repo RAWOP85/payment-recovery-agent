@@ -97,8 +97,8 @@ result and is a strict opt-in default-preserving change.
 - Turn `docs/superpowers/specs/2026-08-22-escalation-engine-design.md` into a submission-shaped
   architecture doc.
 - Record the 5-minute pitch video.
-- Delete `rzp-test-key(1).csv` from the Downloads folder — flagged days ago as containing
-  live-usable test credentials in plaintext, never confirmed deleted.
+- Confirm local credentials-file cleanup (outside the repo), flagged in an earlier session —
+  never confirmed done.
 - Minor oddity, not yet investigated: the `dotenv`/dotenvx startup line's rotating promotional
   tip showed an unfamiliar domain (`www.vestauth.com`) alongside the expected `dotenvx.com` —
   recurred again on this later run too, so it's a consistent tip rotation, not a one-off; still
@@ -176,7 +176,7 @@ diagnosis + policy-engine layer, matching what the codebase actually does.
 
 **Still open:**
 - Flip the GitHub repo to public before Sept 5.
-- Architecture doc, pitch video, `rzp-test-key(1).csv` deletion confirmation — all still open,
+- Architecture doc, pitch video, local credentials-file cleanup confirmation — all still open,
   carried over from earlier sessions.
 - The live-recovery timing failure mode found above (late payment within a longer window still
   invisible to a single post-wait status check) isn't fixed in code, only worked around by using
