@@ -12,6 +12,20 @@ const DEMO_RECORD = {
   description: 'Payment Recovery Agent — live demo payment link',
 };
 
+// A second live fixture for UPI — the payment method the project's own
+// rationale (README "Why this exists") is actually built around, and the
+// majority of Razorpay's real transaction volume. Kept as a distinct
+// customer_id/record so it can be captured as a second, independent live
+// record without touching DEMO_RECORD's already-committed card evidence.
+const DEMO_RECORD_UPI = {
+  customer_id: 'demo_live_002_upi',
+  amount: 49900, // paise -> ₹499.00
+  currency: 'INR',
+  failure_reason: 'checkout_abandoned',
+  failed_at: new Date().toISOString(),
+  description: 'Payment Recovery Agent — live demo payment link (UPI)',
+};
+
 async function createDemoPaymentLink(razorpayClient, record = DEMO_RECORD) {
   return razorpayClient.paymentLink.create({
     amount: record.amount,
@@ -58,24 +72,12 @@ async function pollUntilPaidOrTimeout(razorpayClient, linkId, { totalWaitMs, pol
   return status;
 }
 
-async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWait = false } = {}) {
-  const link = await createDemoPaymentLink(razorpayClient, record);
-
-  let finalStatus;
-  if (liveWait) {
-    console.log(`Pay this link now to test recovery: ${link.short_url}`);
-    console.log(
-      `Polling status every ${POLL_INTERVAL_MS / 1000}s for up to ${LIVE_WAIT_MS / 1000}s (returns as soon as it's paid)...`
-    );
-    finalStatus = await pollUntilPaidOrTimeout(razorpayClient, link.id, {
-      totalWaitMs: LIVE_WAIT_MS,
-      pollIntervalMs: POLL_INTERVAL_MS,
-    });
-    console.log(`Final Razorpay status after polling: ${finalStatus}`);
-  } else {
-    finalStatus = await fetchPaymentLinkStatus(razorpayClient, link.id);
-  }
-
+// Extracted from processLiveRecord() so a caller that needs to create the
+// link and poll it separately (e.g. to hand the short_url to a browser
+// automation step in between) can build the same result shape without
+// duplicating the ladder/attempts logic. Behavior-identical to what
+// processLiveRecord always did inline.
+function buildLiveResult(record, link, finalStatus) {
   const attempts = [];
   let outcome = 'unrecovered';
   let recoveredAtRung = null;
@@ -111,4 +113,33 @@ async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWai
   };
 }
 
-module.exports = { DEMO_RECORD, createDemoPaymentLink, fetchPaymentLinkStatus, processLiveRecord };
+async function processLiveRecord(razorpayClient, record = DEMO_RECORD, { liveWait = false } = {}) {
+  const link = await createDemoPaymentLink(razorpayClient, record);
+
+  let finalStatus;
+  if (liveWait) {
+    console.log(`Pay this link now to test recovery: ${link.short_url}`);
+    console.log(
+      `Polling status every ${POLL_INTERVAL_MS / 1000}s for up to ${LIVE_WAIT_MS / 1000}s (returns as soon as it's paid)...`
+    );
+    finalStatus = await pollUntilPaidOrTimeout(razorpayClient, link.id, {
+      totalWaitMs: LIVE_WAIT_MS,
+      pollIntervalMs: POLL_INTERVAL_MS,
+    });
+    console.log(`Final Razorpay status after polling: ${finalStatus}`);
+  } else {
+    finalStatus = await fetchPaymentLinkStatus(razorpayClient, link.id);
+  }
+
+  return buildLiveResult(record, link, finalStatus);
+}
+
+module.exports = {
+  DEMO_RECORD,
+  DEMO_RECORD_UPI,
+  createDemoPaymentLink,
+  fetchPaymentLinkStatus,
+  pollUntilPaidOrTimeout,
+  buildLiveResult,
+  processLiveRecord,
+};
